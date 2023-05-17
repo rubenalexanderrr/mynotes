@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:developer' as devtools show log;
-
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -76,36 +73,33 @@ class _LoginViewState extends State<LoginView> {
                     (_) => false,
                   );
                 }
-                devtools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
-                  Fluttertoast.showToast(
-                      msg: "User not found",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blue,
-                      textColor: Colors.white,
-                      fontSize: 18.0);
+                  await showErrorDialog(
+                    context,
+                    'User not found',
+                  );
                 } else if (e.code == 'wrong-password') {
-                  Fluttertoast.showToast(
-                      msg: "Wrong password",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blue,
-                      textColor: Colors.white,
-                      fontSize: 18.0);
+                  await showErrorDialog(
+                    context,
+                    'Wrong credentials',
+                  );
                 } else if (e.code == 'invalid-email') {
-                  Fluttertoast.showToast(
-                      msg: "Invalid email",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.blue,
-                      textColor: Colors.white,
-                      fontSize: 18.0);
+                  await showErrorDialog(
+                    context,
+                    'Invalid email',
+                  );
+                } else {
+                  await showErrorDialog(
+                    context,
+                    'Error: ${e.code}',
+                  );
                 }
+              } catch (e) {
+                await showErrorDialog(
+                  context,
+                  e.toString(),
+                );
               }
             },
             child: const Text('Login'),
