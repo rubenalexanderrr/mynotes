@@ -63,15 +63,14 @@ class _LoginViewState extends State<LoginView> {
                   password: password,
                 );
                 if (userCredential.user!.emailVerified) {
+                  if (!mounted) return;
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     notesRoute,
                     (_) => false,
                   );
                 } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    verifyEmailRoute,
-                    (_) => false,
-                  );
+                  if (!mounted) return;
+                  Navigator.of(context).pushNamed(verifyEmailRoute);
                 }
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
@@ -87,7 +86,7 @@ class _LoginViewState extends State<LoginView> {
                 } else if (e.code == 'invalid-email') {
                   await showErrorDialog(
                     context,
-                    'Invalid email',
+                    'This is an invalid email address',
                   );
                 } else {
                   await showErrorDialog(
