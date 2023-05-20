@@ -83,7 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
               } on GenericAuthException {
                 await showErrorDialog(
                   context,
-                  'Generic Authenticita',
+                  'Authentication error',
                 );
               }
             },
