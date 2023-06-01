@@ -5,16 +5,18 @@ import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/notes/new_note_view.dart';
 import 'package:mynotes/views/notes/notes_view.dart';
 import 'package:mynotes/views/register_view.dart';
+import 'package:mynotes/views/splash_screen.dart';
 import 'package:mynotes/views/verify_email_view.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.purple,
+          primarySwatch: Colors.deepPurple,
         ),
         home: const HomePage(),
         routes: {
@@ -53,7 +55,8 @@ class HomePage extends StatelessWidget {
           //   return const VerifyEmailView();
           // }
           default:
-            return const CircularProgressIndicator();
+            return const SplashScreen();
+          // return const CircularProgressIndicator();
         }
       },
     );
