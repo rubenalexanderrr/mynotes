@@ -31,7 +31,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             child: const Text('Send email for your verification')),
         ElevatedButton(
             onPressed: () async {
-              await AuthService.firebase().logout();
+              await AuthService.firebase().logOut();
               if (!mounted) return;
               Navigator.of(context).pushNamedAndRemoveUntil(
                 registerRoute,

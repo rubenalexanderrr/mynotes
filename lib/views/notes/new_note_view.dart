@@ -3,16 +3,23 @@ import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/crud/notes_service.dart';
 
 class NewNoteView extends StatefulWidget {
-  const NewNoteView({super.key});
+  const NewNoteView({Key? key}) : super(key: key);
 
   @override
-  State<NewNoteView> createState() => _NewNoteViewState();
+  _NewNoteViewState createState() => _NewNoteViewState();
 }
 
 class _NewNoteViewState extends State<NewNoteView> {
   DatabaseNote? _note;
   late final NotesService _notesService;
   late final TextEditingController _textController;
+
+  @override
+  void initState() {
+    _notesService = NotesService();
+    _textController = TextEditingController();
+    super.initState();
+  }
 
   void _textControllerListener() async {
     final note = _note;
@@ -36,7 +43,6 @@ class _NewNoteViewState extends State<NewNoteView> {
     if (existingNote != null) {
       return existingNote;
     }
-
     final currentUser = AuthService.firebase().currentUser!;
     final email = currentUser.email!;
     final owner = await _notesService.getUser(email: email);
@@ -59,13 +65,6 @@ class _NewNoteViewState extends State<NewNoteView> {
         text: text,
       );
     }
-  }
-
-  @override
-  void initState() {
-    _notesService = NotesService();
-    _textController = TextEditingController();
-    super.initState();
   }
 
   @override
@@ -93,12 +92,9 @@ class _NewNoteViewState extends State<NewNoteView> {
                 controller: _textController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
                 decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Start typing your note...'),
+                  hintText: 'Start typing your note...',
+                ),
               );
             default:
               return const CircularProgressIndicator();
