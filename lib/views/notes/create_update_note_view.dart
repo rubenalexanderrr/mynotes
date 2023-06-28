@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/colors/color.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/crud/notes_service.dart';
 import 'package:mynotes/utilities/generics/get_arguments.dart';
@@ -66,10 +67,10 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     if (_textController.text.isEmpty && note != null) {
       _notesService.deleteNote(id: note.id);
       Fluttertoast.showToast(
-        msg: 'Note deleted because is empty',
+        msg: "Note deleted because it's empty",
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.deepPurple[400],
-        textColor: Colors.white,
+        backgroundColor: primary,
+        textColor: Colors.black,
         fontSize: 16.0,
       );
     }
